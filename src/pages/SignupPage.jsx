@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { signUpUser } from '../../services/authService';
-import { Button, Input, Select, Textarea, Checkbox, Alert } from '../../components/UI';
-import { useForm } from '../../hooks/useCustom';
-import { validateLawyerSignup, validateClientSignup } from '../../utils/validation';
-import { CASE_TYPES } from '../../utils/constants';
+import { signUpUser } from '../services/authService';
+import { Button, Input, Select, Textarea, Checkbox, Alert } from '../components/UI';
+import { useForm } from '../hooks/useCustom';
+import { validateLawyerSignup, validateClientSignup } from '../utils/validation';
+import { CASE_TYPES } from '../utils/constants';
 
 /**
  * Signup Page

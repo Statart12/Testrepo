@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, FileText, Users, CheckCircle, Trophy, AlertCircle, Clock } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import { getCasesForLawyer } from '../../services/caseService';
-import { getAllLawyers } from '../../services/authService';
-import { Sidebar, Navbar } from '../../components/Layout/Navbar';
-import { Card, Button, Table, Badge, LoadingSpinner, Modal, Alert } from '../../components/UI';
-import { formatDate, getStatusColor, truncateText } from '../../utils/formatting';
-import { useModal } from '../../hooks/useCustom';
+import { useAuth } from '../context/AuthContext';
+import { getCasesForLawyer } from '../services/caseService';
+import { getAllLawyers } from '../services/authService';
+import { Sidebar, Navbar } from '../components/Layout/Navbar';
+import { Card, Button, Table, Badge, LoadingSpinner, Modal, Alert } from '../components/UI';
+import { formatDate, getStatusColor, truncateText } from '../utils/formatting';
+import { useModal } from '../hooks/useCustom';
 
 /**
  * Lawyer Dashboard Page

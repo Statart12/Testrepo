@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, Plus, FileText, CheckCircle, Trophy, AlertCircle } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { getCasesForClient } from '../../services/caseService';
-import { getUserById } from '../../services/authService';
-import { Sidebar, Navbar } from '../../components/Layout/Navbar';
-import { Card, Button, Badge, LoadingSpinner, Modal, Alert } from '../../components/UI';
-import { formatDate, truncateText } from '../../utils/formatting';
-import { useModal } from '../../hooks/useCustom';
+import { getCasesForClient } from '../services/caseService';
+import { getUserById } from '../services/authService';
+import { Sidebar, Navbar } from '../components/Layout/Navbar';
+import { Card, Button, Badge, LoadingSpinner, Modal, Alert } from '../components/UI';
+import { formatDate, truncateText } from '../utils/formatting';
+import { useModal } from '../hooks/useCustom';
 
 /**
  * Client Dashboard Page

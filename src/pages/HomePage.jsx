@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Navbar } from '../../components/Layout/Navbar';
-import { Button, Card } from '../../components/UI';
+import { Navbar } from '../components/Layout/Navbar';
+import { Button, Card } from '../components/UI';
 import { CheckCircle, Users, FileText, Zap } from 'lucide-react';
 
 /**

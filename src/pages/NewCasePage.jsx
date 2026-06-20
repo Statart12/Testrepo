@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Navbar } from '../../components/Layout/Navbar';
-import { Card, Button, Input, Select, Textarea, Alert } from '../../components/UI';
-import { createCase, assignLawyerToCase } from '../../services/caseService';
-import { matchCaseWithLawyer } from '../../services/caseMatchingService';
-import { createCaseMatchedNotification } from '../../services/notificationService';
-import { useAuth } from '../../context/AuthContext';
-import { useForm } from '../../hooks/useCustom';
-import { validateCaseForm } from '../../utils/validation';
-import { CASE_TYPES, URGENCY_LEVELS } from '../../utils/constants';
+import { Navbar } from '../components/Layout/Navbar';
+import { Card, Button, Input, Select, Textarea, Alert } from '../components/UI';
+import { createCase, assignLawyerToCase } from '../services/caseService';
+import { matchCaseWithLawyer } from '../services/caseMatchingService';
+import { createCaseMatchedNotification } from '../services/notificationService';
+import { useAuth } from '../context/AuthContext';
+import { useForm } from '../hooks/useCustom';
+import { validateCaseForm } from '../utils/validation';
+import { CASE_TYPES, URGENCY_LEVELS } from '../utils/constants';
 
 /**
  * New Case Page

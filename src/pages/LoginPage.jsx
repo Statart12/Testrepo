@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { loginUser } from '../../services/authService';
-import { Button, Input, Alert } from '../../components/UI';
-import { useForm } from '../../hooks/useCustom';
+import { loginUser } from '../services/authService';
+import { Button, Input, Alert } from '../components/UI';
+import { useForm } from '../hooks/useCustom';
 
 /**
  * Login Page

@@ -1,4 +1,5 @@
-import { getCasesForLawyer, getAllLawyers, getLawyersBySpecialization } from './authService';
+import { getAllLawyers, getLawyersBySpecialization } from './authService';
+import { getCasesForLawyer } from './caseService';
 
 /**
  * Match a case with the best available lawyer
