@@ -9,7 +9,7 @@ import {
   orderBy,
   deleteDoc,
 } from 'firebase/firestore';
-import { db } from './firebase';
+import { assertFirebaseConfigured, db } from './firebase';
 
 /**
  * Create a notification
@@ -18,6 +18,8 @@ import { db } from './firebase';
  */
 export const createNotification = async (notificationData) => {
   try {
+    assertFirebaseConfigured();
+
     const notificationDocRef = doc(collection(db, 'notifications'));
     await setDoc(notificationDocRef, {
       ...notificationData,
@@ -39,6 +41,8 @@ export const createNotification = async (notificationData) => {
  */
 export const getNotifications = async (userId, unreadOnly = false) => {
   try {
+    assertFirebaseConfigured();
+
     let q;
     if (unreadOnly) {
       q = query(
@@ -72,6 +76,8 @@ export const getNotifications = async (userId, unreadOnly = false) => {
  */
 export const markNotificationAsRead = async (notificationId) => {
   try {
+    assertFirebaseConfigured();
+
     const notificationDocRef = doc(db, 'notifications', notificationId);
     await updateDoc(notificationDocRef, {
       read: true,
@@ -90,6 +96,8 @@ export const markNotificationAsRead = async (notificationId) => {
  */
 export const markAllNotificationsAsRead = async (userId) => {
   try {
+    assertFirebaseConfigured();
+
     const q = query(
       collection(db, 'notifications'),
       where('userId', '==', userId),
@@ -116,6 +124,8 @@ export const markAllNotificationsAsRead = async (userId) => {
  */
 export const deleteNotification = async (notificationId) => {
   try {
+    assertFirebaseConfigured();
+
     const notificationDocRef = doc(db, 'notifications', notificationId);
     await deleteDoc(notificationDocRef);
   } catch (error) {

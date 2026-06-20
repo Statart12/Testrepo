@@ -16,7 +16,7 @@ import {
   where,
   getDocs,
 } from 'firebase/firestore';
-import { auth, db } from './firebase';
+import { assertFirebaseConfigured, auth, db } from './firebase';
 
 /**
  * Sign up a new user
@@ -29,6 +29,8 @@ import { auth, db } from './firebase';
  */
 export const signUpUser = async (email, password, fullName, userData, userType) => {
   try {
+    assertFirebaseConfigured();
+
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
@@ -67,6 +69,8 @@ export const signUpUser = async (email, password, fullName, userData, userType) 
  */
 export const loginUser = async (email, password) => {
   try {
+    assertFirebaseConfigured();
+
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
@@ -102,6 +106,8 @@ export const loginUser = async (email, password) => {
  */
 export const logoutUser = async () => {
   try {
+    assertFirebaseConfigured();
+
     await signOut(auth);
   } catch (error) {
     console.error('Logout error:', error);
@@ -114,6 +120,8 @@ export const logoutUser = async () => {
  * @returns {Promise<object>} User object or null
  */
 export const getCurrentUser = async () => {
+  assertFirebaseConfigured();
+
   return new Promise((resolve, reject) => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -154,6 +162,8 @@ export const getCurrentUser = async () => {
  */
 export const updateUserProfile = async (userId, updates) => {
   try {
+    assertFirebaseConfigured();
+
     const userDocRef = doc(db, 'users', userId);
     await setDoc(
       userDocRef,
@@ -176,6 +186,8 @@ export const updateUserProfile = async (userId, updates) => {
  */
 export const getUserById = async (userId) => {
   try {
+    assertFirebaseConfigured();
+
     const userDocRef = doc(db, 'users', userId);
     const userDocSnap = await getDoc(userDocRef);
 
@@ -195,6 +207,8 @@ export const getUserById = async (userId) => {
  */
 export const getAllLawyers = async () => {
   try {
+    assertFirebaseConfigured();
+
     const q = query(collection(db, 'users'), where('userType', '==', 'lawyer'));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => doc.data());
@@ -211,6 +225,8 @@ export const getAllLawyers = async () => {
  */
 export const getLawyersBySpecialization = async (specialization) => {
   try {
+    assertFirebaseConfigured();
+
     const q = query(
       collection(db, 'users'),
       where('userType', '==', 'lawyer'),

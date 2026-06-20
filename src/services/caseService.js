@@ -10,7 +10,7 @@ import {
   deleteDoc,
   orderBy,
 } from 'firebase/firestore';
-import { db } from './firebase';
+import { assertFirebaseConfigured, db } from './firebase';
 
 /**
  * Create a new case
@@ -19,6 +19,8 @@ import { db } from './firebase';
  */
 export const createCase = async (caseData) => {
   try {
+    assertFirebaseConfigured();
+
     const caseDocRef = doc(collection(db, 'cases'));
     await setDoc(caseDocRef, {
       ...caseData,
@@ -40,6 +42,8 @@ export const createCase = async (caseData) => {
  */
 export const getCaseById = async (caseId) => {
   try {
+    assertFirebaseConfigured();
+
     const caseDocRef = doc(db, 'cases', caseId);
     const caseDocSnap = await getDoc(caseDocRef);
 
@@ -60,6 +64,8 @@ export const getCaseById = async (caseId) => {
  */
 export const getCasesForClient = async (clientId) => {
   try {
+    assertFirebaseConfigured();
+
     const q = query(
       collection(db, 'cases'),
       where('clientId', '==', clientId),
@@ -83,6 +89,8 @@ export const getCasesForClient = async (clientId) => {
  */
 export const getCasesForLawyer = async (lawyerId) => {
   try {
+    assertFirebaseConfigured();
+
     const q = query(
       collection(db, 'cases'),
       where('lawyerId', '==', lawyerId),
@@ -108,6 +116,8 @@ export const getCasesForLawyer = async (lawyerId) => {
  */
 export const updateCaseStatus = async (caseId, status, outcome = null) => {
   try {
+    assertFirebaseConfigured();
+
     const caseDocRef = doc(db, 'cases', caseId);
     const updateData = {
       status,
@@ -135,6 +145,8 @@ export const updateCaseStatus = async (caseId, status, outcome = null) => {
  */
 export const assignLawyerToCase = async (caseId, lawyerId, lawyerName, lawyerEmail) => {
   try {
+    assertFirebaseConfigured();
+
     const caseDocRef = doc(db, 'cases', caseId);
     await updateDoc(caseDocRef, {
       lawyerId,
@@ -157,6 +169,8 @@ export const assignLawyerToCase = async (caseId, lawyerId, lawyerName, lawyerEma
  */
 export const deleteCase = async (caseId) => {
   try {
+    assertFirebaseConfigured();
+
     const caseDocRef = doc(db, 'cases', caseId);
     await deleteDoc(caseDocRef);
   } catch (error) {
@@ -172,6 +186,8 @@ export const deleteCase = async (caseId) => {
  */
 export const getCasesByStatus = async (status) => {
   try {
+    assertFirebaseConfigured();
+
     const q = query(
       collection(db, 'cases'),
       where('status', '==', status),
@@ -194,6 +210,8 @@ export const getCasesByStatus = async (status) => {
  */
 export const getUnassignedCases = async () => {
   try {
+    assertFirebaseConfigured();
+
     const q = query(
       collection(db, 'cases'),
       where('lawyerId', '==', null),
@@ -219,6 +237,8 @@ export const getUnassignedCases = async () => {
  */
 export const addCaseActivity = async (caseId, activityData) => {
   try {
+    assertFirebaseConfigured();
+
     const activityDocRef = doc(collection(db, 'cases', caseId, 'activities'));
     await setDoc(activityDocRef, {
       ...activityData,
@@ -237,6 +257,8 @@ export const addCaseActivity = async (caseId, activityData) => {
  */
 export const getCaseActivities = async (caseId) => {
   try {
+    assertFirebaseConfigured();
+
     const activitiesCollection = collection(db, 'cases', caseId, 'activities');
     const q = query(activitiesCollection, orderBy('timestamp', 'desc'));
     const querySnapshot = await getDocs(q);

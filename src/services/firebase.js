@@ -11,16 +11,40 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const isRealConfigValue = (value) => {
+  if (!value) return false;
+
+  const normalizedValue = String(value).trim().toLowerCase();
+  return (
+    !normalizedValue.startsWith('your_') &&
+    !normalizedValue.startsWith('@vite_') &&
+    !normalizedValue.includes('placeholder')
+  );
+};
+
+export const isFirebaseConfigured = Object.values(firebaseConfig).every(isRealConfigValue);
+
+export const firebaseConfigError =
+  'Firebase is not configured. Create a .env.local file from .env.example and add your Firebase project values.';
+
+export const assertFirebaseConfigured = () => {
+  if (!isFirebaseConfigured) {
+    throw new Error(firebaseConfigError);
+  }
+};
+
+// Initialize Firebase only when the required Vite environment variables exist.
+const app = isFirebaseConfigured ? initializeApp(firebaseConfig) : null;
 
 // Initialize Auth with persistence
-export const auth = getAuth(app);
-setPersistence(auth, browserLocalPersistence).catch((error) => {
-  console.error('Error setting persistence:', error);
-});
+export const auth = app ? getAuth(app) : null;
+if (auth) {
+  setPersistence(auth, browserLocalPersistence).catch((error) => {
+    console.error('Error setting persistence:', error);
+  });
+}
 
 // Initialize Firestore
-export const db = getFirestore(app);
+export const db = app ? getFirestore(app) : null;
 
 export default app;

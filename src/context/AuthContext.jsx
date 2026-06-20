@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth, db } from '../services/firebase';
+import { auth, db, firebaseConfigError, isFirebaseConfigured } from '../services/firebase';
 import { getUserById, updateUserProfile } from '../services/authService';
 import { doc, getDoc } from 'firebase/firestore';
 
@@ -21,6 +21,12 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!isFirebaseConfigured) {
+      setError(firebaseConfigError);
+      setLoading(false);
+      return undefined;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
       try {
         if (authUser) {
@@ -62,6 +68,10 @@ export const AuthProvider = ({ children }) => {
 
   const updateUser = async (updates) => {
     try {
+      if (!isFirebaseConfigured) {
+        throw new Error(firebaseConfigError);
+      }
+
       if (user) {
         await updateUserProfile(user.uid, updates);
         setUserData((prev) => ({
