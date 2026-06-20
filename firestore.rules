@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isUser(userId) {
+      return request.auth.uid == userId;
+    }
+
+    function getUserType() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.userType;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isSignedIn() && (isUser(userId) || getUserType() == 'admin');
+      allow write: if isUser(userId);
+      allow create: if isSignedIn();
+    }
+
+    // Cases collection
+    match /cases/{caseId} {
+      allow read: if isSignedIn() && (
+        // Client can read their own cases
+        isUser(resource.data.clientId) ||
+        // Lawyer can read their assigned cases
+        isUser(resource.data.lawyerId) ||
+        // Admin can read all
+        getUserType() == 'admin'
+      );
+
+      allow create: if isSignedIn() && 
+        getUserType() == 'client' &&
+        request.data.clientId == request.auth.uid;
+
+      allow update: if isSignedIn() && (
+        // Client can only update certain fields
+        (isUser(resource.data.clientId) && 
+         request.data.keys().hasOnly(['description', 'urgencyLevel', 'updatedAt'])) ||
+        // Lawyer can update case status, outcome
+        (isUser(resource.data.lawyerId) && 
+         request.data.keys().hasOnly(['status', 'outcome', 'updatedAt'])) ||
+        // Admin can update anything
+        getUserType() == 'admin'
+      );
+
+      allow delete: if isSignedIn() && getUserType() == 'admin';
+
+      // Case activities subcollection
+      match /activities/{activityId} {
+        allow read: if isSignedIn() && (
+          isUser(get(/databases/$(database)/documents/cases/$(caseId)).data.clientId) ||
+          isUser(get(/databases/$(database)/documents/cases/$(caseId)).data.lawyerId) ||
+          getUserType() == 'admin'
+        );
+
+        allow create: if isSignedIn() && (
+          isUser(get(/databases/$(database)/documents/cases/$(caseId)).data.clientId) ||
+          isUser(get(/databases/$(database)/documents/cases/$(caseId)).data.lawyerId) ||
+          getUserType() == 'admin'
+        );
+      }
+    }
+
+    // Notifications collection
+    match /notifications/{notificationId} {
+      allow read: if isSignedIn() && isUser(resource.data.userId);
+      allow write: if isSignedIn() && isUser(resource.data.userId);
+      allow create: if isSignedIn();
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
