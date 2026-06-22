@@ -133,13 +133,34 @@ export const NewCasePage = () => {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
 
-      <main className="max-w-2xl mx-auto p-6">
+      <main className="max-w-4xl mx-auto p-6">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Create New Case</h1>
-          <p className="text-gray-600 mt-2">
-            Submit your legal case details and we'll match you with the best lawyer
-          </p>
+        <div className="mb-12">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="flex-1">
+              <h1 className="text-4xl font-bold text-gray-900">Create Your Legal Case</h1>
+              <p className="text-gray-600 mt-2 text-lg">
+                Our AI-powered matching system will connect you with the perfect lawyer for your needs
+              </p>
+            </div>
+          </div>
+
+          {/* Progress indicator */}
+          <div className="flex items-center justify-between max-w-md">
+            <div className={`flex flex-col items-center ${!showConfirm ? 'opacity-100' : 'opacity-50'}`}>
+              <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white mb-2" style={{backgroundColor: !showConfirm ? '#7d42ff' : '#d1d5db'}}>
+                1
+              </div>
+              <span className="text-xs font-semibold text-gray-600">Case Details</span>
+            </div>
+            <div className={`flex-1 h-1 mx-4 ${!showConfirm ? 'bg-gray-300' : 'bg-primary-600'}`}></div>
+            <div className={`flex flex-col items-center ${showConfirm ? 'opacity-100' : 'opacity-50'}`}>
+              <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white mb-2" style={{backgroundColor: showConfirm ? '#7d42ff' : '#d1d5db'}}>
+                2
+              </div>
+              <span className="text-xs font-semibold text-gray-600">Confirm Lawyer</span>
+            </div>
+          </div>
         </div>
 
         {/* Error Alert */}
@@ -160,6 +181,10 @@ export const NewCasePage = () => {
         {!showConfirm ? (
           <Card>
             <form onSubmit={form.handleSubmit} className="space-y-6">
+              {/* Form sections */}
+              <div>
+                <h3 className="font-semibold text-lg text-gray-900 mb-4">Case Information</h3>
+                <div className="space-y-4">
               <Select
                 label="Case Type"
                 name="caseType"
@@ -202,6 +227,8 @@ export const NewCasePage = () => {
                 }))}
                 required
               />
+                </div>
+              </div>
 
               <div className="flex gap-4">
                 <Button

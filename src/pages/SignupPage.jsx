@@ -91,15 +91,72 @@ export const SignupPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 py-8 px-4">
-      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="w-12 h-12 bg-primary-600 text-white rounded-lg flex items-center justify-center font-bold mx-auto mb-4">
+        <div className="text-center mb-12">
+          <div className="w-16 h-16 bg-primary-600 text-white rounded-lg flex items-center justify-center font-bold mx-auto mb-4 text-2xl">
             ⚖
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Create Account</h1>
-          <p className="text-gray-600 mt-2">Join LegalMatch today</p>
+          <h1 className="text-4xl font-bold text-gray-900">Join LegalMatch</h1>
+          <p className="text-gray-600 mt-2 text-lg">Connect with expert lawyers or find clients for your practice</p>
         </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left side - Features */}
+          <div className="hidden lg:block">
+            <div className="space-y-8">
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary-600 text-white rounded-lg flex items-center justify-center">
+                    ✓
+                  </div>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg text-gray-900">Find Expert Lawyers</h3>
+                  <p className="text-gray-600 mt-1">Get matched with specialized lawyers for your case</p>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary-600 text-white rounded-lg flex items-center justify-center">
+                    ✓
+                  </div>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg text-gray-900">Build Your Practice</h3>
+                  <p className="text-gray-600 mt-1">Grow your client base with our matching system</p>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary-600 text-white rounded-lg flex items-center justify-center">
+                    ✓
+                  </div>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg text-gray-900">Secure & Verified</h3>
+                  <p className="text-gray-600 mt-1">All professionals are verified and authenticated</p>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-primary-600 text-white rounded-lg flex items-center justify-center">
+                    ✓
+                  </div>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg text-gray-900">Simple & Transparent</h3>
+                  <p className="text-gray-600 mt-1">Clear pricing with no hidden fees</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right side - Form */}
+          <div className="bg-white rounded-lg shadow-lg p-8">
 
         {/* Alerts */}
         {alertError && (
@@ -328,6 +385,8 @@ export const SignupPage = () => {
               Sign in
             </Link>
           </p>
+        </div>
+      </div>
         </div>
       </div>
     </div>

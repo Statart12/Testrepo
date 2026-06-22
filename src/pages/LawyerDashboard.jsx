@@ -224,25 +224,33 @@ export const LawyerDashboard = () => {
                 </div>
               </div>
               <div className="space-y-3">
-                {filteredCases.slice(0, 5).map((caseItem) => (
-                  <div
-                    key={caseItem.id}
-                    className="p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"
-                    onClick={() => handleCaseModal(caseItem)}
-                  >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h3 className="font-semibold text-gray-900">{caseItem.caseType}</h3>
-                        <p className="text-sm text-gray-600">{caseItem.clientName}</p>
-                        <p className="text-xs text-gray-500 mt-1">{truncateText(caseItem.description, 60)}</p>
-                      </div>
-                      <Badge
-                        text={caseItem.status}
-                        variant={caseItem.status === 'active' ? 'primary' : caseItem.status === 'cleared' ? 'success' : 'warning'}
-                      />
-                    </div>
+                {filteredCases.slice(0, 5).length === 0 ? (
+                  <div className="text-center py-8">
+                    <FileText className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                    <p className="text-gray-500 font-semibold mb-2">No Cases</p>
+                    <p className="text-gray-500 text-sm">Cases matching this filter will appear here. Check back soon!</p>
                   </div>
-                ))}
+                ) : (
+                  filteredCases.slice(0, 5).map((caseItem) => (
+                    <div
+                      key={caseItem.id}
+                      className="p-3 border rounded-lg hover:bg-gray-50 cursor-pointer"
+                      onClick={() => handleCaseModal(caseItem)}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h3 className="font-semibold text-gray-900">{caseItem.caseType}</h3>
+                          <p className="text-sm text-gray-600">{caseItem.clientName}</p>
+                          <p className="text-xs text-gray-500 mt-1">{truncateText(caseItem.description, 60)}</p>
+                        </div>
+                        <Badge
+                          text={caseItem.status}
+                          variant={caseItem.status === 'active' ? 'primary' : caseItem.status === 'cleared' ? 'success' : 'warning'}
+                        />
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
               {filteredCases.length > 5 && (
                 <Button variant="outline" fullWidth className="mt-4">
@@ -255,13 +263,21 @@ export const LawyerDashboard = () => {
             <Card>
               <h2 className="text-lg font-bold text-gray-900 mb-4">My Clients</h2>
               <div className="space-y-3">
-                {clients.slice(0, 5).map((client) => (
-                  <div key={client.id} className="p-3 border rounded-lg">
-                    <h3 className="font-semibold text-gray-900">{client.fullName}</h3>
-                    <p className="text-sm text-gray-600">{client.email}</p>
-                    <p className="text-sm text-gray-600">{client.phone}</p>
+                {clients.length === 0 ? (
+                  <div className="text-center py-8">
+                    <Users className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                    <p className="text-gray-500 font-semibold mb-2">No Clients Yet</p>
+                    <p className="text-gray-500 text-sm">Accepted cases will show your clients here</p>
                   </div>
-                ))}
+                ) : (
+                  clients.slice(0, 5).map((client) => (
+                    <div key={client.id} className="p-3 border rounded-lg hover:bg-gray-50 transition">
+                      <h3 className="font-semibold text-gray-900">{client.fullName}</h3>
+                      <p className="text-sm text-gray-600">{client.email}</p>
+                      <p className="text-sm text-gray-600">{client.phone}</p>
+                    </div>
+                  ))
+                )}
               </div>
               {clients.length > 5 && (
                 <Button variant="outline" fullWidth className="mt-4">

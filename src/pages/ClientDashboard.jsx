@@ -169,9 +169,14 @@ export const ClientDashboard = () => {
               <Card>
                 <h2 className="text-lg font-bold text-gray-900 mb-4">My Cases</h2>
                 {cases.length === 0 ? (
-                  <div className="text-center py-8">
-                    <p className="text-gray-500 mb-4">No cases yet</p>
-                    <Button onClick={() => navigate('/new-case')}>
+                  <div className="text-center py-12">
+                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <FileText className="w-8 h-8 text-gray-400" />
+                    </div>
+                    <p className="text-gray-500 font-semibold mb-2">No Cases Yet</p>
+                    <p className="text-gray-500 text-sm mb-6">Start your legal journey by creating your first case.</p>
+                    <p className="text-gray-500 text-sm mb-4">Our AI will match you with an experienced lawyer specializing in your case type.</p>
+                    <Button onClick={() => navigate('/new-case')} size="lg">
                       Create Your First Case
                     </Button>
                   </div>
